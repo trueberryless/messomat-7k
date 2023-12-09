@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
+import { first } from 'rxjs/operators';
 import { MatListModule } from '@angular/material/list';
+import { Data } from '../../_models/data';
+import { BackendService } from '@app/_services/backend.service';
 
 @Component({
   selector: 'app-log',
@@ -9,28 +12,22 @@ import { MatListModule } from '@angular/material/list';
   styleUrl: './log.component.scss',
 })
 export class LogComponent {
-  logs: string[] = [];
+  logs: Data[] = [];
+
+  constructor(private backendService: BackendService) {}
 
   ngOnInit() {
-    this.logs = ['Item 1'];
-
-    // Call the updateList function every second
     setInterval(() => {
       this.updateList();
     }, 1000);
   }
 
   private updateList() {
-    // Update the logs with new values
-    const newItem = 'Item ' + (this.logs.length + 1);
-
-    // Add new item to the beginning of the array
-    this.logs.unshift(newItem);
-
-    // Remove the last item if the array exceeds a certain length (for demonstration purposes)
-    const maxLength = 15;
-    if (this.logs.length > maxLength) {
-      this.logs.pop();
-    }
+    this.backendService
+      .getAll()
+      .pipe(first())
+      .subscribe((logs) => {
+        this.logs = logs.reverse();
+      });
   }
 }
