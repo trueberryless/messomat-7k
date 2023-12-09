@@ -1,1 +1,8 @@
-<p>log works!</p>
+<div style="padding: 2rem">
+  <mat-list [class.mat-elevation-z8]="false">
+    @for (log of logs; track log) {
+    <mat-list-item>{{ log }}</mat-list-item>
+    <mat-divider></mat-divider>
+    }
+  </mat-list>
+</div>
