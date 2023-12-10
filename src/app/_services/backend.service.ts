@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 import { Data } from '../_models/data';
 
 import { environment } from '@environments/environment';
@@ -8,9 +9,12 @@ import { environment } from '@environments/environment';
   providedIn: 'root',
 })
 export class BackendService {
+  apiUrl: string = environment.apiUrl;
+
   constructor(private http: HttpClient) {}
 
-  getAll() {
-    return this.http.get<Data[]>(`${environment.apiUrl}/all`);
+  getAll(): Observable<Data[]> {
+    console.log(this.apiUrl + '/all');
+    return this.http.get<Data[]>(`${this.apiUrl}/all`);
   }
 }

@@ -2,7 +2,9 @@ import { Component } from '@angular/core';
 import { first } from 'rxjs/operators';
 import { MatListModule } from '@angular/material/list';
 import { Data } from '../../_models/data';
-import { BackendService } from '@app/_services/backend.service';
+
+import { environment } from '@environments/environment';
+import { BackendService } from '@app/_services';
 
 @Component({
   selector: 'app-log',
@@ -23,6 +25,8 @@ export class LogComponent {
   }
 
   private updateList() {
+    console.log(environment.apiUrl + '/all');
+
     this.backendService
       .getAll()
       .pipe(first())

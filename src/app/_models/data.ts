@@ -1,5 +1,5 @@
 export class Data {
-  temperture?: number;
+  temperature?: number;
   humidity?: number;
   timestamp?: string;
 }
