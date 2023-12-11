@@ -14,7 +14,6 @@ export class BackendService {
   constructor(private http: HttpClient) {}
 
   getAll(): Observable<Data[]> {
-    console.log(this.apiUrl + '/all');
     return this.http.get<Data[]>(`${this.apiUrl}/all`);
   }
 }
