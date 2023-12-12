@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { Data } from '../_models/data';
+import { Observable, firstValueFrom } from 'rxjs';
+import { Data, Fan } from '@app/_models';
 
 import { environment } from '@environments/environment';
 
@@ -15,5 +15,13 @@ export class BackendService {
 
   getAll(): Observable<Data[]> {
     return this.http.get<Data[]>(`${this.apiUrl}/all`);
+  }
+
+  getStatus() {
+    return firstValueFrom(this.http.get<Fan>(`${this.apiUrl}/status`));
+  }
+
+  setFan(on: number) {
+    this.http.get<Fan>(`${this.apiUrl}/set_fan?on=${on}`);
   }
 }

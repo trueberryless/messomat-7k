@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
 import { first } from 'rxjs/operators';
 import { MatListModule } from '@angular/material/list';
-import { Data } from '../../_models/data';
+import { Data } from '@app/_models';
 
-import { environment } from '@environments/environment';
 import { BackendService } from '@app/_services';
 
 @Component({
@@ -19,14 +18,18 @@ export class LogComponent {
   constructor(private backendService: BackendService) {}
 
   ngOnInit() {
+    this.backendService
+      .getAll()
+      .pipe(first())
+      .subscribe((logs) => {
+        this.logs = logs.reverse();
+      });
     setInterval(() => {
       this.updateList();
     }, 1000);
   }
 
   private updateList() {
-    console.log(environment.apiUrl + '/all');
-
     this.backendService
       .getAll()
       .pipe(first())

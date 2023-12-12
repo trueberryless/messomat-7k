@@ -1,0 +1,14 @@
+.fan {
+  color: white;
+  overflow: hidden;
+}
+
+.fan.rotate {
+  animation: rotate 3s 0.3s ease-in, rotate 2s 3.3s infinite linear;
+}
+
+@keyframes rotate {
+  to {
+    transform: rotate(360deg);
+  }
+}
