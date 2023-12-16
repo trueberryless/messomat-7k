@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { first } from 'rxjs/operators';
-import { MatListModule } from '@angular/material/list';
-import { Data } from '@app/_models';
 
+import { Data } from '@app/_models';
 import { BackendService } from '@app/_services';
+
+import { MatListModule } from '@angular/material/list';
 
 @Component({
   selector: 'app-log',
@@ -14,6 +15,7 @@ import { BackendService } from '@app/_services';
 })
 export class LogComponent {
   logs: Data[] = [];
+  timer: any;
 
   constructor(private backendService: BackendService) {}
 
@@ -24,12 +26,16 @@ export class LogComponent {
       .subscribe((logs) => {
         this.logs = logs.reverse();
       });
-    setInterval(() => {
-      this.updateList();
+    this.timer = setInterval(() => {
+      this.update();
     }, 1000);
   }
 
-  private updateList() {
+  ngOnDestroy() {
+    clearInterval(this.timer);
+  }
+
+  private update() {
     this.backendService
       .getAll()
       .pipe(first())

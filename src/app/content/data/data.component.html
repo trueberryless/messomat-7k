@@ -1,1 +1,10 @@
-<p>data works!</p>
+<div style="padding: 2rem">
+  <mat-slide-toggle
+    [checked]="sendMode"
+    (change)="setSendMode($event)"
+  ></mat-slide-toggle>
+  <mat-slide-toggle
+    [checked]="on"
+    (change)="setOnOff($event)"
+  ></mat-slide-toggle>
+</div>

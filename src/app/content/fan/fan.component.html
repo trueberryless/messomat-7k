@@ -1,14 +1,17 @@
 <div style="padding: 2rem">
   <p>
-    Fan Status: @if (fan.fanOn == 1) { On } @else if (fan.fanOn == 0) { Off }
-    @else { Crunching together latest data... }
+    Fan Status: @if (status.fanOn == 1) { On } @else if (status.fanOn == 0) {
+    Off } @else { Crunching together latest data... }
   </p>
-  @if (fan.fanOn == 1) {
+  @if (status.fanOn == 1) {
   <img src="../../../assets/fan.png" class="fan rotate" />
   } @else {
   <img src="../../../assets/fan.png" class="fan" />
   }
   <div>
-    <mat-slide-toggle (change)="(setFan)" [checked]="isOn"></mat-slide-toggle>
+    <mat-slide-toggle
+      [checked]="isOn"
+      (change)="setFan($event)"
+    ></mat-slide-toggle>
   </div>
 </div>
