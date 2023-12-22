@@ -22,22 +22,17 @@ export class BackendService {
   }
 
   setFan(on: number) {
-    this.http
-      .post(`${this.apiUrl}/set-fan?on=${on}`, {
-        title: 'Set Fan Status',
-      })
-      .subscribe({
-        error: (error) => {
-          console.error('There was an error!', error);
-        },
-      });
+    console.log('Request: ' + `${this.apiUrl}/set-fan?on=${on}`);
+    return this.http.post(`${this.apiUrl}/set-fan?on=${on}`, null).subscribe({
+      error: (error) => {
+        console.error('There was an error!', error);
+      },
+    });
   }
 
   setSendMode(mode: string) {
     this.http
-      .post(`${this.apiUrl}/set-send-mode?mode=${mode}`, {
-        title: 'Set Send Mode',
-      })
+      .post(`${this.apiUrl}/set-send-mode?mode=${mode}`, null)
       .subscribe({
         error: (error) => {
           console.error('There was an error!', error);
@@ -46,26 +41,18 @@ export class BackendService {
   }
 
   setOn() {
-    this.http
-      .post(`${this.apiUrl}/set-on`, {
-        title: 'Turn On',
-      })
-      .subscribe({
-        error: (error) => {
-          console.error('There was an error!', error);
-        },
-      });
+    this.http.post(`${this.apiUrl}/set-on`, null).subscribe({
+      error: (error) => {
+        console.error('There was an error!', error);
+      },
+    });
   }
 
   setOff() {
-    this.http
-      .post(`${this.apiUrl}/set-off`, {
-        title: 'Turn Off',
-      })
-      .subscribe({
-        error: (error) => {
-          console.error('There was an error!', error);
-        },
-      });
+    this.http.post(`${this.apiUrl}/set-off`, null).subscribe({
+      error: (error) => {
+        console.error('There was an error!', error);
+      },
+    });
   }
 }
