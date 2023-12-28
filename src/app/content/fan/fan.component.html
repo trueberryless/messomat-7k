@@ -3,11 +3,7 @@
     Fan Status: @if (status.fanOn == 1) { On } @else if (status.fanOn == 0) {
     Off } @else { Crunching together latest data... }
   </p>
-  @if (status.fanOn == 1) {
-  <img src="../../../assets/fan.png" class="fan rotate" />
-  } @else {
-  <img src="../../../assets/fan.png" class="fan" />
-  }
+  <img src="../../../assets/fan.png" [ngClass]="currentFanClasses" />
   <div>
     <mat-slide-toggle
       [checked]="isOn"
