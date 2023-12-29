@@ -23,6 +23,7 @@ export class FanComponent {
   isOn = false;
   timer: any;
   currentFanClasses: Record<string, boolean> = {};
+  timeoutId: any;
 
   constructor(private backendService: BackendService) {}
 
@@ -48,12 +49,12 @@ export class FanComponent {
       if (oldState.fanOn != this.status.fanOn) {
         if (this.status.fanOn == 1) {
           this.setFanCurrentClasses('start');
-          setTimeout(() => {
+          this.timeoutId = setTimeout(() => {
             this.setFanCurrentClasses('rotating');
           }, 2000);
         } else {
           this.setFanCurrentClasses('stop');
-          setTimeout(() => {
+          this.timeoutId = setTimeout(() => {
             this.setFanCurrentClasses('still');
           }, 2000);
         }
@@ -75,5 +76,6 @@ export class FanComponent {
   public setFan(event: MatSlideToggleChange) {
     const on = event.checked ? 1 : 0;
     this.backendService.setFan(on);
+    clearTimeout(this.timeoutId);
   }
 }
