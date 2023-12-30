@@ -1,13 +1,24 @@
 <div style="padding: 2rem">
   <p>
-    Fan Status: @if (status.fanOn == 1) { On } @else if (status.fanOn == 0) {
-    Off } @else { Crunching together latest data... }
+    Remote station: @if (loading) {Loading...} @else {@if (isOn) { On } @else {
+    Off }}
   </p>
-  <img src="../../../assets/fan.png" [ngClass]="currentFanClasses" />
+  <mat-slide-toggle
+    [checked]="isOn"
+    [hideIcon]="true"
+    (change)="setOnOff($event)"
+  ></mat-slide-toggle>
+  <p style="margin-top: 2rem">
+    Fan Status: @if (loading) {Loading...} @else {@if (fanIsOn) { On } @else {
+    Off }}
+  </p>
   <div>
     <mat-slide-toggle
-      [checked]="isOn"
+      [checked]="fanIsOn"
+      [hideIcon]="true"
+      [disabled]="!isOn"
       (change)="setFan($event)"
     ></mat-slide-toggle>
   </div>
+  <img src="../../../assets/fan.png" [ngClass]="currentFanClasses" />
 </div>

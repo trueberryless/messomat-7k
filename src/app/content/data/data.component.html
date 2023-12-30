@@ -41,14 +41,14 @@
     <mat-tab label="Temperature">
       <div style="padding: 2rem">
         <ngx-charts-line-chart
-          [view]="[1525, 400]"
+          [view]="[1525, 700]"
           [legend]="true"
           [showXAxisLabel]="true"
           [showYAxisLabel]="true"
           [xAxis]="true"
           [yAxis]="true"
           [xAxisLabel]="'Seconds'"
-          [yAxisLabel]="'°C and %'"
+          [yAxisLabel]="'°C'"
           [yScaleMin]="-20"
           [yScaleMax]="50"
           [timeline]="true"
@@ -63,14 +63,14 @@
     <mat-tab label="Humidity">
       <div style="padding: 2rem">
         <ngx-charts-line-chart
-          [view]="[1525, 400]"
+          [view]="[1525, 700]"
           [legend]="true"
           [showXAxisLabel]="true"
           [showYAxisLabel]="true"
           [xAxis]="true"
           [yAxis]="true"
           [xAxisLabel]="'Seconds'"
-          [yAxisLabel]="'°C and %'"
+          [yAxisLabel]="'%'"
           [yScaleMin]="0"
           [yScaleMax]="100"
           [timeline]="true"
@@ -85,6 +85,24 @@
     <mat-tab label="Settings">
       <div style="padding: 2rem">
         <h1>Turn off</h1>
+        <mat-slide-toggle
+          [checked]="isOn"
+          [hideIcon]="true"
+          (change)="setOnOff($event)"
+        ></mat-slide-toggle>
+        <h1 style="margin-top: 2rem">Time Interval</h1>
+        <mat-grid-list cols="3" rowHeight="2:1" style="width: 10rem">
+          <mat-grid-tile>slow</mat-grid-tile>
+          <mat-grid-tile>
+            <mat-slide-toggle
+              [checked]="sendMode"
+              [hideIcon]="true"
+              [disabled]="!isOn"
+              (change)="setSendMode($event)"
+            ></mat-slide-toggle
+          ></mat-grid-tile>
+          <mat-grid-tile>fast</mat-grid-tile>
+        </mat-grid-list>
       </div>
     </mat-tab>
   </mat-tab-group>

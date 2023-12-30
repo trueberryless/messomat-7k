@@ -1,5 +1,5 @@
 export class Status {
   fanOn?: number;
-  speed?: string;
+  sendMode?: string;
   timestamp?: string;
 }

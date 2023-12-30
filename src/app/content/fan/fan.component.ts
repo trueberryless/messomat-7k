@@ -20,7 +20,9 @@ import { NgClass } from '@angular/common';
 })
 export class FanComponent {
   status: Status = new Status();
+  loading = true;
   isOn = false;
+  fanIsOn = false;
   timer: any;
   currentFanClasses: Record<string, boolean> = {};
   timeoutId: any;
@@ -43,8 +45,10 @@ export class FanComponent {
     const oldState = this.status;
 
     this.backendService.getStatus().then((fan) => {
+      this.isOn = true;
       this.status = fan;
-      this.isOn = fan.fanOn == 1 ? true : false;
+      this.fanIsOn = fan.fanOn == 1 ? true : false;
+      this.loading = false;
 
       if (oldState.fanOn != this.status.fanOn) {
         if (this.status.fanOn == 1) {
@@ -77,5 +81,23 @@ export class FanComponent {
     const on = event.checked ? 1 : 0;
     this.backendService.setFan(on);
     clearTimeout(this.timeoutId);
+  }
+
+  public setOnOff(event: MatSlideToggleChange) {
+    const on = event.checked;
+    this.isOn = on;
+    if (on) {
+      this.backendService.setOn();
+    } else {
+      this.backendService.setOff();
+    }
+
+    if (this.fanIsOn) {
+      this.fanIsOn = false;
+      this.setFanCurrentClasses('stop');
+      this.timeoutId = setTimeout(() => {
+        this.setFanCurrentClasses('still');
+      }, 2000);
+    }
   }
 }

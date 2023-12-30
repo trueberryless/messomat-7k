@@ -41,11 +41,15 @@ export class DataComponent {
   barChartData: BarChartData[] = [];
   status: Status = new Status();
   sendMode = false;
-  on = true;
+  isOn = false;
   timer: any;
 
   tempLineChartData: LineChartData[] = [];
   humiLineChartData: LineChartData[] = [];
+
+  colorScheme = {
+    domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA'],
+  };
 
   constructor(private backendService: BackendService) {}
 
@@ -68,7 +72,8 @@ export class DataComponent {
 
     this.backendService.getStatus().then((status) => {
       this.status = status;
-      this.sendMode = status.speed == 'fast' ? true : false;
+      this.sendMode = status.sendMode == 'fast' ? true : false;
+      this.isOn = true;
     });
 
     this.timer = setInterval(() => {
@@ -158,20 +163,31 @@ export class DataComponent {
   public setSendMode(event: MatSlideToggleChange) {
     const sendMode = event.checked ? 'fast' : 'slow';
     this.backendService.setSendMode(sendMode);
+
+    if (sendMode === 'fast') {
+      clearInterval(this.timer);
+
+      this.timer = setInterval(() => {
+        this.update();
+      }, 1000);
+    } else {
+      clearInterval(this.timer);
+
+      this.timer = setInterval(() => {
+        this.update();
+      }, 4000);
+    }
   }
 
   public setOnOff(event: MatSlideToggleChange) {
     const on = event.checked;
+    this.isOn = on;
     if (on) {
       this.backendService.setOn();
     } else {
       this.backendService.setOff();
     }
   }
-
-  colorScheme = {
-    domain: ['#5AA454', '#E44D25', '#CFC0BB', '#7aa3e5', '#a8385d', '#aae3f5'],
-  };
 
   onSelect(data: any): void {
     console.log('Item clicked', JSON.parse(JSON.stringify(data)));
